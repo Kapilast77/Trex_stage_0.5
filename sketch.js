@@ -1,5 +1,6 @@
 var trex, trex_running, edges;
 var groundImage;
+var ground;
 
 function preload(){
   trex_running = loadAnimation("trex1.png","trex3.png","trex4.png");
@@ -14,6 +15,10 @@ function setup(){
   trex.addAnimation("running", trex_running);
   edges = createEdgeSprites();
   
+  //creating ground 
+  ground=createSprite(200,180,400,20);
+  ground.addImage(groundImage);
+  groundImage.x=ground.width/2
   //adding scale and position to trex
   trex.scale = 0.5;
   trex.x = 50
@@ -22,7 +27,7 @@ function setup(){
 
 function draw(){
   //set background color 
-  background("white");
+  background("cyan");
   
   //logging the y position of the trex
   console.log(trex.y)
@@ -33,8 +38,11 @@ function draw(){
   }
   
   trex.velocityY = trex.velocityY + 0.5;
-  
+  ground.velocityX=-2;
+  if(ground.x<0){
+    ground.x=200
+  }
   //stop trex from falling down
-  trex.collide(edges[3])
+  trex.collide(ground);
   drawSprites();
 }
